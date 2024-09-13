@@ -1,35 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import {Todolist, TaskType} from './components/Todolist';
+import {TaskType, Todolist} from './components/Todolist';
 
 
-function App() {
+ function App() {
     //Business Logic layer
-    const todolistTitle_1: string = "What to learn"
-    const todolistTitle_2: string = "What to buy"
+    const todolistTitle: string = "What to learn"
+    
 
-    const task_1: Array<TaskType> = [
+    // let task: Array<TaskType> = [
+    //     {id: 1, title: 'HTML', isDone: true},
+    //     {id: 2, title: 'CSS', isDone: true},
+    //     {id: 3, title: 'JS/TS', isDone: true},
+    // ]
+
+    const [task, setTask] = useState<Array<TaskType>>([
         {id: 1, title: 'HTML', isDone: true},
         {id: 2, title: 'CSS', isDone: true},
         {id: 3, title: 'JS/TS', isDone: true},
-    ]
+    ] )
 
-    const task_2: Array<TaskType> = [
-        {id: 4, title: 'Cola', isDone: true},
-        {id: 5, title: 'Whiskey', isDone: true},
-        {id: 6, title: 'Ice', isDone: true},
-    ]
+     const removeTask = (taskId: number) => {
+        const nextState: Array<TaskType> = [] 
+        for(let i = 0; i < task.length; i++) {
+            if(task[i].id !== taskId) {
+                nextState.push(task[i])
+            }
+        }
+        setTask(nextState)
+
+
+        const copycurrentState = [...task];
+    };
+
+  
 
 
 
     //User Interface
     return (
         <div className="App">
-            <Todolist title = {todolistTitle_1} tasks = {task_1}/>
-            {/*Todolist(title: todolistTitle_1, task: task_1)*/}
-            <Todolist title = {todolistTitle_2} tasks = {task_2}/>
-            {/*Todolist(title: todolistTitle_2, task: task_2)*/}
+            <Todolist title = {todolistTitle} tasks = {task} removeTask={removeTask}  />
             
+              
         </div>
     );
 }
