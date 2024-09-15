@@ -3,6 +3,9 @@ import './App.css';
 import {TaskType, Todolist} from './components/Todolist';
 
 
+type FilterValuesType = "All" | "Active" | "Complited"
+
+
  function App() {
     //Business Logic layer
     const todolistTitle: string = "What to learn"
@@ -18,20 +21,47 @@ import {TaskType, Todolist} from './components/Todolist';
         {id: 1, title: 'HTML', isDone: true},
         {id: 2, title: 'CSS', isDone: true},
         {id: 3, title: 'JS/TS', isDone: true},
-    ] )
-
-     const removeTask = (taskId: number) => {
-        const nextState: Array<TaskType> = [] 
-        for(let i = 0; i < task.length; i++) {
-            if(task[i].id !== taskId) {
-                nextState.push(task[i])
-            }
-        }
-        setTask(nextState)
+    ] );
 
 
-        const copycurrentState = [...task];
+        const removeTask = (taskId: number) => {
+
+        const nextState : Array<TaskType> = task.filter(task => task.id !== taskId);
+        setTask(nextState);
+
+
+        const [filter, setFilter] = useState<FilterValuesType>("All");
+
+        let filteredTasks: Array<TaskType> = task
+
+        //This is how you can do it without filter method
+        //But please don't
+        // const nextState: Array<TaskType> = [] 
+        // for(let i = 0; i < task.length; i++) {
+        //     if(task[i].id !== taskId) {
+        //         nextState.push(task[i])
+        //     }
+        // }
+        // setTask(nextState)
+
+
+    //     const copyCurrentState = [...task];
+    //     let taskIndex;
+
+    //     for( let i = 0; i < copyCurrentState.length; i++) {
+    //         if(task[i].id === taskId) {
+    //             taskIndex = i
+    //         }
+    //     }
+    //         if(taskIndex !== undefined) {
+    //     copyCurrentState.splice(taskIndex, 1);
+    //         }
+    //     setTask(copyCurrentState)
+    
+        
     };
+
+
 
   
 
