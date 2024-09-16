@@ -3,7 +3,7 @@ import './App.css';
 import {TaskType, Todolist} from './components/Todolist';
 
 
-type FilterValuesType = "All" | "Active" | "Complited"
+export type FilterValuesType = "All" | "Active" | "Complited"
 
 
  function App() {
@@ -28,11 +28,22 @@ type FilterValuesType = "All" | "Active" | "Complited"
 
         const nextState : Array<TaskType> = task.filter(task => task.id !== taskId);
         setTask(nextState);
+        }
 
 
         const [filter, setFilter] = useState<FilterValuesType>("All");
 
-        let filteredTasks: Array<TaskType> = task
+        let filteredTask: Array<TaskType> = task
+        
+        if(filter === "Active") {
+            filteredTask = task.filter(task => task.isDone === false)
+        }
+
+        if(filter === "Complited") {
+            filteredTask = task.filter(task => task.isDone === true)
+        }
+
+        const chandeFilter = (newFilterValue: FilterValuesType) => setFilter(newFilterValue)
 
         //This is how you can do it without filter method
         //But please don't
@@ -59,22 +70,26 @@ type FilterValuesType = "All" | "Active" | "Complited"
     //     setTask(copyCurrentState)
     
         
-    };
+    
 
 
 
-  
+    
 
 
 
     //User Interface
     return (
         <div className="App">
-            <Todolist title = {todolistTitle} tasks = {task} removeTask={removeTask}  />
+            <Todolist 
+            title = {todolistTitle} 
+            tasks = {filteredTask} 
+            removeTask={removeTask}
+            chandeFilter={chandeFilter}  />
             
               
         </div>
     );
-}
 
+    }
 export default App;

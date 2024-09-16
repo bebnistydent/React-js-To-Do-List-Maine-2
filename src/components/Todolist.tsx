@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
+import {FilterValuesType} from "./../App"
 
 
 
@@ -8,7 +9,8 @@ import { Button } from "./Button";
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: number)=> void
+    removeTask: (taskId: number)=> void,
+    chandeFilter: (newFilterValue: FilterValuesType) => void
 }
 
 export type TaskType = {
@@ -55,9 +57,9 @@ export function Todolist (props: TodolistPropsType) {
             {taskList}
         </ul>
         <div>
-            <Button title="All"/>
-            <Button title="Active"/>
-            <Button title="Completed"/>
+            <Button title="All" onClickHandler = {()=> props.chandeFilter("All")}/>
+            <Button title="Active" onClickHandler={()=> props.chandeFilter('Active')}/>
+            <Button title="Completed" onClickHandler={()=> props.chandeFilter('Complited')}/>
         </div>
     </div>
     )
