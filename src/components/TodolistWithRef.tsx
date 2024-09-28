@@ -1,6 +1,6 @@
-import React, { KeyboardEvent, useState } from "react";
+import React from "react";
 import { Button } from "./Button";
-import {FilterValuesType} from "./../App"
+import {FilterValuesType} from "../App"
 
 
 
@@ -25,7 +25,7 @@ export type TaskType = {
 
 export function Todolist (props: TodolistPropsType) {
 
-    
+    const inputRef = React.useRef<HTMLInputElement>(null)
 
 
 
@@ -39,7 +39,7 @@ export function Todolist (props: TodolistPropsType) {
     //     taskList.push(tasakElement)
     // }  
            //!!!This is example of what "MAP" method do behind the scenes!!!
-    const [taskTitle, setTaskTitle] = useState("")
+
     
     const taskList: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
         return (
@@ -52,39 +52,22 @@ export function Todolist (props: TodolistPropsType) {
     });
 
     const onClickAddTaskHandler = () => {
-        if(isTitleValueValid) {
-            props.addTask(taskTitle)
-            setTaskTitle(" ")
-        }};
+        if(inputRef.current) {
+            props.addTask(inputRef.current.value)
+            inputRef.current.value = ""
 
-        const onKeyDounAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-            if(e.key === "Enter") {
-                onClickAddTaskHandler();
-            }
-        };
-
-
-    const isTitleValueValid = taskTitle.length < 15
+            
+        }
+    };
 
     return (
         <div className="todolist">
         <h3>{props.title}</h3>
         <div>
-            <input
-            placeholder = {"Max 15 characters"}
-            value = {taskTitle}
-            onChange = {(e) => setTaskTitle(e.currentTarget.value)}
-            onKeyDown={onKeyDounAddTaskHandler}
+            <input ref={inputRef}
+            placeholder={"Max lenght is 15 characters"}
             />
-
-
-            <Button title="+" 
-                    onClickHandler={onClickAddTaskHandler}
-                    isDisabled = {!isTitleValueValid}
-                     />
-
-            {!isTitleValueValid && <div style = {{color: "red"}}>Max length 15 characters!</div>}        
-
+            <Button title="+" onClickHandler={onClickAddTaskHandler} />
         </div>
         <ul>
             {taskList}

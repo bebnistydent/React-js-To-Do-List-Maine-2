@@ -1,36 +1,61 @@
 import React, { useState } from 'react';
 import './App.css';
 import {TaskType, Todolist} from './components/Todolist';
+import { v1 } from 'uuid';
 
 
 export type FilterValuesType = "All" | "Active" | "Complited"
 
 
  function App() {
+    
+
     //Business Logic layer
     const todolistTitle: string = "What to learn"
     
 
-    // let task: Array<TaskType> = [
-    //     {id: 1, title: 'HTML', isDone: true},
-    //     {id: 2, title: 'CSS', isDone: true},
-    //     {id: 3, title: 'JS/TS', isDone: true},
-    // ]
+    
 
-    const [task, setTask] = useState<Array<TaskType>>([
-        {id: 1, title: 'HTML', isDone: true},
-        {id: 2, title: 'CSS', isDone: true},
-        {id: 3, title: 'JS/TS', isDone: true},
+    const [task, setTask] = React.useState<Array<TaskType>>([
+        {id: v1(), title: 'HTML', isDone: true},
+        {id: v1(), title: 'CSS', isDone: true},
+        {id: v1(), title: 'JS/TS', isDone: true},
     ] );
 
 
-        const removeTask = (taskId: number) => {
+        const removeTask = (taskId: string) => {
 
         const nextState : Array<TaskType> = task.filter(task => task.id !== taskId);
         setTask(nextState);
-        }
+        };
 
 
+        const addTask = (title: string) => {
+        
+            const newTask: TaskType = {
+                title: title,
+                isDone: false,
+                id: v1(),
+            }
+            const copyState = [...task, newTask]
+            setTask(copyState)
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //GUI Layer
         const [filter, setFilter] = useState<FilterValuesType>("All");
 
         let filteredTask: Array<TaskType> = task
@@ -85,7 +110,8 @@ export type FilterValuesType = "All" | "Active" | "Complited"
             title = {todolistTitle} 
             tasks = {filteredTask} 
             removeTask={removeTask}
-            chandeFilter={chandeFilter}  />
+            chandeFilter={chandeFilter}
+            addTask={addTask}  />
             
               
         </div>
