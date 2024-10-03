@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useState } from "react";
+import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "./Button";
 import {FilterValuesType} from "./../App"
 
@@ -12,6 +12,7 @@ type TodolistPropsType = {
     removeTask: (taskId: string)=> void,
     addTask: (title: string) => void
     chandeFilter: (newFilterValue: FilterValuesType) => void,
+    setTaskNewStatus: (taskId: string, newStatus: boolean) => void,
 }
 
 export type TaskType = {
@@ -42,11 +43,17 @@ export function Todolist (props: TodolistPropsType) {
     const [taskTitle, setTaskTitle] = useState("")
     
     const taskList: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
+
+        const removeTaskHandler = ()=> props.removeTask(task.id)
+        const setTaskNewStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.setTaskNewStatus(task.id, e.currentTarget.checked)
+        
         return (
             <li key={task.id}>
-                <input type="checkbox" checked={task.isDone}/>
+                <input type="checkbox" 
+                       checked={task.isDone} 
+                       onChange={setTaskNewStatusHandler}/>
                 <span>{task.title}</span>
-                <Button title="Del" onClickHandler={()=> props.removeTask(task.id)}/>
+                <Button title="Del" onClickHandler={removeTaskHandler}/>
             </li>
         )
     });

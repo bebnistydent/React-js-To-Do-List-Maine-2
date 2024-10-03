@@ -43,7 +43,12 @@ export type FilterValuesType = "All" | "Active" | "Complited"
 
 
 
-
+        const setTaskNewStatus = (taskId: string, newStatus: boolean) => {
+            
+            const nextState: Array<TaskType> = task.map(t => t.id === taskId ? {
+                 ...t, isDone: newStatus} : t)
+            setTask(nextState)
+        };
 
 
 
@@ -111,7 +116,8 @@ export type FilterValuesType = "All" | "Active" | "Complited"
             tasks = {filteredTask} 
             removeTask={removeTask}
             chandeFilter={chandeFilter}
-            addTask={addTask}  />
+            addTask={addTask}
+            setTaskNewStatus={setTaskNewStatus}  />
             
               
         </div>
