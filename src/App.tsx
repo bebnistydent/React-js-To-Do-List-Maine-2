@@ -17,9 +17,9 @@ export type FilterValuesType = "All" | "Active" | "Complited"
     
 
     const [task, setTask] = React.useState<Array<TaskType>>([
-        {id: v1(), title: 'HTML', isDone: true},
-        {id: v1(), title: 'CSS', isDone: true},
-        {id: v1(), title: 'JS/TS', isDone: true},
+        {id: v1(), title: 'HTML', isDone: false},
+        {id: v1(), title: 'CSS', isDone: false},
+        {id: v1(), title: 'JS/TS', isDone: false},
     ] );
 
 
@@ -45,8 +45,8 @@ export type FilterValuesType = "All" | "Active" | "Complited"
 
         const setTaskNewStatus = (taskId: string, newStatus: boolean) => {
             
-            const nextState: Array<TaskType> = task.map(t => t.id === taskId ? {
-                 ...t, isDone: newStatus} : t)
+            const nextState: Array<TaskType> = task.map(task => task.id === taskId ? {
+                 ...task, isDone: newStatus} : task)
             setTask(nextState)
         };
 
@@ -113,7 +113,8 @@ export type FilterValuesType = "All" | "Active" | "Complited"
         <div className="App">
             <Todolist 
             title = {todolistTitle} 
-            tasks = {filteredTask} 
+            tasks = {filteredTask}
+            filter={filter} 
             removeTask={removeTask}
             chandeFilter={chandeFilter}
             addTask={addTask}

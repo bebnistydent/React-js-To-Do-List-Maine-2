@@ -9,6 +9,7 @@ import {FilterValuesType} from "./../App"
 type TodolistPropsType = {
     title: string
     tasks: Array<TaskType>
+    filter: FilterValuesType,
     removeTask: (taskId: string)=> void,
     addTask: (title: string) => void
     chandeFilter: (newFilterValue: FilterValuesType) => void,
@@ -41,6 +42,7 @@ export function Todolist (props: TodolistPropsType) {
     // }  
            //!!!This is example of what "MAP" method do behind the scenes!!!
     const [taskTitle, setTaskTitle] = useState("")
+    const [taskInputError, setTaskInputError] = useState(false)
     
     const taskList: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
 
@@ -52,17 +54,27 @@ export function Todolist (props: TodolistPropsType) {
                 <input type="checkbox" 
                        checked={task.isDone} 
                        onChange={setTaskNewStatusHandler}/>
-                <span>{task.title}</span>
+                <span className={task.isDone ? "task-done" : "task"}>{task.title}</span>
                 <Button title="Del" onClickHandler={removeTaskHandler}/>
             </li>
         )
     });
 
     const onClickAddTaskHandler = () => {
+    
+    const trimmedTaskTitle = taskTitle.trim();
+    if(trimmedTaskTitle) {
         if(isTitleValueValid) {
             props.addTask(taskTitle)
             setTaskTitle(" ")
-        }};
+        }
+    } else {
+        setTaskInputError(true)
+        setTaskTitle("")
+    }
+
+        };
+
 
         const onKeyDounAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
             if(e.key === "Enter") {
@@ -80,7 +92,12 @@ export function Todolist (props: TodolistPropsType) {
             <input
             placeholder = {"Max 15 characters"}
             value = {taskTitle}
-            onChange = {(e) => setTaskTitle(e.currentTarget.value)}
+            onChange = {(e) => {
+                taskInputError && setTaskInputError(false)
+                setTaskTitle(e.currentTarget.value)
+            }}
+
+            className={taskInputError ? "error" : ""}
             onKeyDown={onKeyDounAddTaskHandler}
             />
 
@@ -90,16 +107,17 @@ export function Todolist (props: TodolistPropsType) {
                     isDisabled = {!isTitleValueValid}
                      />
 
-            {!isTitleValueValid && <div style = {{color: "red"}}>Max length 15 characters!</div>}        
+            {!isTitleValueValid && <div style = {{color: "red"}}>Max length 15 characters!</div>}
+            {taskInputError && <div style = {{color: "red"}}>Title is required!</div>}        
 
         </div>
         <ul>
             {taskList}
         </ul>
         <div>
-            <Button title="All" onClickHandler = {()=> props.chandeFilter("All")}/>
-            <Button title="Active" onClickHandler={()=> props.chandeFilter('Active')}/>
-            <Button title="Completed" onClickHandler={()=> props.chandeFilter('Complited')}/>
+            <Button title="All" classes={props.filter === "All" ? "btn-filter-active" : ""} onClickHandler = {()=> props.chandeFilter("All")}/>
+            <Button title="Active" classes={props.filter === "Active" ? "btn-filter-active" : ""} onClickHandler={()=> props.chandeFilter("Active")}/>
+            <Button title="Completed" classes={props.filter === "Complited" ? "btn-filter-active" : ""} onClickHandler={()=> props.chandeFilter("Complited")}/>
         </div>
     </div>
     )
