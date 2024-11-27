@@ -1,6 +1,7 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "./Button";
 import {FilterValuesType} from "./../App"
+import { AddItemForum } from "./AddItemForm";
 
 
 
@@ -16,7 +17,9 @@ type TodolistPropsType = {
     changeTodolistFilter: (newFilterValue: FilterValuesType, todolistId: string) => void,
     setTaskNewStatus: (taskId: string, newStatus: boolean, todolistId: string) => void,
     removeTodolist: (todolistId: string) => void
-}
+};
+
+
 
 export type TaskType = {
     id: string
@@ -52,8 +55,8 @@ export function Todolist (props: TodolistPropsType) {
     //     taskList.push(tasakElement)
     // }  
            //!!!This is example of what "MAP" method do behind the scenes!!!
-    const [taskTitle, setTaskTitle] = useState("")
-    const [taskInputError, setTaskInputError] = useState(false)
+    // const [taskTitle, setTaskTitle] = useState("")
+    // const [taskInputError, setTaskInputError] = useState(false)
     
     const taskList: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
 
@@ -71,30 +74,22 @@ export function Todolist (props: TodolistPropsType) {
         )
     });
 
-    const onClickAddTaskHandler = () => {
+    const onClickAddTaskHandler = (taskTitle: string) => {
     
-    const trimmedTaskTitle = taskTitle.trim();
-    if(trimmedTaskTitle) {
-        if(isTitleValueValid) {
+        if(taskTitle.trim() !== "") {
             props.addTask(taskTitle, props.todolistId)
-            setTaskTitle(" ")
+
         }
-    } else {
-        setTaskInputError(true)
-        setTaskTitle("")
-    }
+    };
 
-        };
-
-
-        const onKeyDounAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-            if(e.key === "Enter") {
-                onClickAddTaskHandler();
-            }
-        };
+        // const onKeyDounAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        //     if(e.key === "Enter") {
+        //         onClickAddTaskHandler();
+        //     }
+        // };
 
 
-    const isTitleValueValid = taskTitle.length < 15
+    // const isTitleValueValid = taskTitle.length < 15
 
     return (
         <div className="todolist">
@@ -103,7 +98,8 @@ export function Todolist (props: TodolistPropsType) {
             <Button title= '-' onClickHandler={()=> props.removeTodolist(props.todolistId)}/>
         </h3>
         <div>
-            <input
+            <AddItemForum addItem={onClickAddTaskHandler}/>
+            {/* <input
             placeholder = {"Max 15 characters"}
             value = {taskTitle}
             onChange = {(e) => {
@@ -122,7 +118,7 @@ export function Todolist (props: TodolistPropsType) {
                      />
 
             {!isTitleValueValid && <div style = {{color: "red"}}>Max length 15 characters!</div>}
-            {taskInputError && <div style = {{color: "red"}}>Title is required!</div>}        
+            {taskInputError && <div style = {{color: "red"}}>Title is required!</div>}         */}
 
         </div>
         <ul>

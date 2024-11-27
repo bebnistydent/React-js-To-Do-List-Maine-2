@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import {TaskStateType, TaskType, Todolist, TodolistType} from './components/Todolist';
 import { v1 } from 'uuid';
+import { AddItemForum } from './components/AddItemForm';
 
 
 export type FilterValuesType = "All" | "Active" | "Complited"
@@ -39,9 +40,11 @@ function App() {
         {id: v1(), title: 'Wiskey', isDone: false},
         {id: v1(), title: 'Cola', isDone: false},
         {id: v1(), title: 'Tequila', isDone: false},
-        ]
-    })
+        ],
 
+       
+    })
+        //task
         const removeTask = (taskId: string, todolistId: string) => {
             setTask({...task, [todolistId]: task [todolistId].filter(t => t.id !== taskId)})
 
@@ -70,7 +73,7 @@ function App() {
 
 
         
-        
+        //todolist
         const changeTodolistFilter = (newFilterValue: FilterValuesType, todolistId: string) => {
             setTodolist(todolist.map(tl => tl.id === todolistId ? {...tl, filter: newFilterValue} :tl))
         }
@@ -121,11 +124,21 @@ function App() {
 
     
 
-
+const addTodolis = (title: string) => {
+    const todolistID = v1();
+    const newTodolist: TodolistType = {
+        id: todolistID,
+        title: title,
+        filter: "All"
+    }
+    setTodolist([...todolist, newTodolist])
+    setTask({...task, [todolistID]: []})
+}
 
     //User Interface
     return (
         <div className="App">
+            <AddItemForum addItem={addTodolis}/>
 
         {todolist.map(tl => {
 
