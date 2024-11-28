@@ -2,6 +2,8 @@ import React, { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "./Button";
 import {FilterValuesType} from "./../App"
 import { AddItemForum } from "./AddItemForm";
+import { EditableSpan } from "./EditableSpan";
+
 
 
 
@@ -17,6 +19,7 @@ type TodolistPropsType = {
     changeTodolistFilter: (newFilterValue: FilterValuesType, todolistId: string) => void,
     setTaskNewStatus: (taskId: string, newStatus: boolean, todolistId: string) => void,
     removeTodolist: (todolistId: string) => void
+    changeTodolistTitle: (title: string, todolistId: string) => void
 };
 
 
@@ -82,21 +85,21 @@ export function Todolist (props: TodolistPropsType) {
         }
     };
 
-        // const onKeyDounAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        //     if(e.key === "Enter") {
-        //         onClickAddTaskHandler();
-        //     }
-        // };
+    const changeTodolistTitle = (title: string) => {
+        props.changeTodolistTitle(title, props.todolistId)
+    }
 
-
-    // const isTitleValueValid = taskTitle.length < 15
 
     return (
         <div className="todolist">
+
         <h3>
-            {props.title}
+
+            <EditableSpan title = {props.title} changeTitle={changeTodolistTitle}/>
             <Button title= '-' onClickHandler={()=> props.removeTodolist(props.todolistId)}/>
+
         </h3>
+
         <div>
             <AddItemForum addItem={onClickAddTaskHandler}/>
             {/* <input

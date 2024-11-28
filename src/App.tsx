@@ -120,10 +120,6 @@ function App() {
     }
     
 
-
-
-    
-
 const addTodolis = (title: string) => {
     const todolistID = v1();
     const newTodolist: TodolistType = {
@@ -134,6 +130,11 @@ const addTodolis = (title: string) => {
     setTodolist([...todolist, newTodolist])
     setTask({...task, [todolistID]: []})
 }
+
+const changeTodolistTitle = (title: string, todolistId: string) => {
+    setTodolist(todolist.map(tl => tl.id === todolistId ? {...tl, title} :tl))
+}
+
 
     //User Interface
     return (
@@ -161,7 +162,8 @@ if(tl.filter === "Complited") {
                 changeTodolistFilter={changeTodolistFilter}
                 addTask={addTask}
                 setTaskNewStatus={setTaskNewStatus}
-                removeTodolist={removeTodolist}  />
+                removeTodolist={removeTodolist}
+                changeTodolistTitle = {changeTodolistTitle}  />
             )
         })}
 
