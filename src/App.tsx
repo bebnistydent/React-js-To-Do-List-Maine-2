@@ -71,6 +71,15 @@ function App() {
                 ...task, isDone: newStatus} : task)})
         };
 
+        const changeTaskTitle = (taskId: string, title: string, todolistId: string) => {
+            
+            
+            setTask({...task, [todolistId]: task[todolistId].map(task => task.id === taskId ? {
+                ...task, title: title} : task)})
+        };
+
+
+
 
         
         //todolist
@@ -140,6 +149,7 @@ const changeTodolistTitle = (title: string, todolistId: string) => {
     return (
         <div className="App">
             <AddItemForum addItem={addTodolis}/>
+            
 
         {todolist.map(tl => {
 
@@ -153,7 +163,8 @@ if(tl.filter === "Complited") {
     filteredTask = filteredTask.filter(task => task.isDone === true)
 }
             return (
-                <Todolist 
+                <Todolist
+                key={tl.id} 
                 todolistId = {tl.id}
                 title = {tl.title} 
                 tasks = {filteredTask}
@@ -163,7 +174,8 @@ if(tl.filter === "Complited") {
                 addTask={addTask}
                 setTaskNewStatus={setTaskNewStatus}
                 removeTodolist={removeTodolist}
-                changeTodolistTitle = {changeTodolistTitle}  />
+                changeTodolistTitle = {changeTodolistTitle}
+                changeTaskTitle={changeTaskTitle}  />
             )
         })}
 

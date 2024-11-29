@@ -20,6 +20,7 @@ type TodolistPropsType = {
     setTaskNewStatus: (taskId: string, newStatus: boolean, todolistId: string) => void,
     removeTodolist: (todolistId: string) => void
     changeTodolistTitle: (title: string, todolistId: string) => void
+    changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
 };
 
 
@@ -63,15 +64,21 @@ export function Todolist (props: TodolistPropsType) {
     
     const taskList: Array<JSX.Element> = props.tasks.map((task: TaskType) => {
 
+        
         const removeTaskHandler = ()=> props.removeTask(task.id, props.todolistId)
         const setTaskNewStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.setTaskNewStatus(task.id, e.currentTarget.checked, props.todolistId)
+        const changeTaskTitleHandler = (title: string) => {
+            props.changeTaskTitle(task.id, title, props.todolistId)
+            
+        }
         
         return (
             <li key={task.id}>
                 <input type="checkbox" 
                        checked={task.isDone} 
                        onChange={setTaskNewStatusHandler}/>
-                <span className={task.isDone ? "task-done" : "task"}>{task.title}</span>
+                {/* <span className={task.isDone ? "task-done" : "task"}>{task.title}</span> */}
+                <EditableSpan changeTitle={changeTaskTitleHandler} title={task.title} />
                 <Button title="Del" onClickHandler={removeTaskHandler}/>
             </li>
         )

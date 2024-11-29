@@ -16,8 +16,11 @@ export const EditableSpan = ({title, changeTitle}: EditableSpanPropsType) => {
 
 
     const onEditMode = () => setEditMode(true);
-    const offEditMode = () => setEditMode(false);
-
+    const offEditMode = () => {
+        changeTitle(itemTitle)
+        setEditMode(false)
+        //console.log(itemTitle)
+    };
     return (
         editMode
         ? <input 
