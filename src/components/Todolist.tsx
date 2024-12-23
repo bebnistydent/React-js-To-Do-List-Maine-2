@@ -67,6 +67,7 @@ export function Todolist (props: TodolistPropsType) {
         
         const removeTaskHandler = ()=> props.removeTask(task.id, props.todolistId)
         const setTaskNewStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.setTaskNewStatus(task.id, e.currentTarget.checked, props.todolistId)
+        
         const changeTaskTitleHandler = (title: string) => {
             props.changeTaskTitle(task.id, title, props.todolistId)
             
