@@ -1,14 +1,14 @@
-.App {
+/* .App {
   padding: 30px;
   display: flex;
 }
 
 .App > div {
   margin-right: 50px;
-}
+} */
 
 .todolist {
-  background-color: cadetblue;
+  background-color: rgb(235, 223, 233);
   border: 2px solid darkgrey;
   border-radius: 5px;
   padding: 15px;
@@ -31,6 +31,17 @@
   color: white;
 }
 
+.add-form {
+  display: flex;
+  align-items: start;
+  
+}
+
 .error {
   border: 2px solid red
 }
+
+.no-task-error {
+  color: red;
+}
+

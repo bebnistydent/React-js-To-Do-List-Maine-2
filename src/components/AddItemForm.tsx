@@ -1,5 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useState } from "react";
-import { Button } from "./Button";
+//import { Button } from "./Button";
+import { Button, TextField } from "@mui/material";
+import PlusOneIcon from '@mui/icons-material/PlusOne';
+
 
 
 type AddItemForumPropsType = {
@@ -33,17 +36,25 @@ export const AddItemForum = ({addItem}: AddItemForumPropsType) => {
             };
 
     return (
-        <div>
-            <input
+        <div className="add-form">
+            <TextField
+            variant = "outlined"
+            size = "small"
             className = {error ? 'error' : ''}
             value = {itemTitle}
             onChange = {changeItemTitleHendler}
             onKeyUp={onKeyUpAddTaskHandler}
+            error = {!!error}
+            helperText = {'Title is required'}
             />
 
 
-            <Button title="+" onClickHandler={onClickAddItemHandler}/>
-            {error && <div className={'error-message'}>{error}</div>}
+            <Button size = "medium" variant = "contained" color = "primary"
+            startIcon = {<PlusOneIcon />}
+            onClick = {onClickAddItemHandler} 
+            >Task</Button> 
+
+            {/* {error && <div className={'error-message'}>{error}</div>} */}
 
             {/* {!isTitleValueValid && <div style = {{color: "red"}}>Max length 15 characters!</div>}
             {taskInputError && <div style = {{color: "red"}}>Title is required!</div>}         */}

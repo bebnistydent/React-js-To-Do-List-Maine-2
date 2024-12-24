@@ -3,6 +3,13 @@ import './App.css';
 import {TaskStateType, TaskType, Todolist, TodolistType} from './components/Todolist';
 import { v1 } from 'uuid';
 import { AddItemForum } from './components/AddItemForm';
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import { Container } from '@mui/material';
+ 
 
 
 export type FilterValuesType = "All" | "Active" | "Complited"
@@ -148,8 +155,18 @@ const changeTodolistTitle = (title: string, todolistId: string) => {
     //User Interface
     return (
         <div className="App">
-            <AddItemForum addItem={addTodolis}/>
-            
+
+    <AppBar position="static">
+         <Toolbar>
+           <IconButton color="inherit">
+             <MenuIcon />
+           </IconButton>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
+      <Container fixed> 
+    <AddItemForum addItem={addTodolis}/>
+        
 
         {todolist.map(tl => {
 
@@ -181,7 +198,7 @@ if(tl.filter === "Complited") {
 
            
             
-              
+</Container>  
         </div>
     );
 
