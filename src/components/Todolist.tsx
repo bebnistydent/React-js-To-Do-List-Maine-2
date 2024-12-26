@@ -69,7 +69,9 @@ export function Todolist(props: TodolistPropsType) {
 
         return (
 
-            <ListItem disablePadding 
+            <ListItem 
+            sx = {{opacity: task.isDone ? 0.5 : 1}}
+            disablePadding 
             key={task.id}
             secondaryAction = {
             <IconButton onClick={removeTaskHandler}> 

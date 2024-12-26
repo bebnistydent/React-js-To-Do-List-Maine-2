@@ -8,7 +8,9 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Container } from '@mui/material';
+import { Box, Container, Grid2, Paper } from '@mui/material';
+import { MenuButton } from './components/MenuButton';
+import { createTheme, ThemeProvider } from '@mui/material/styles'; 
  
 
 
@@ -51,6 +53,8 @@ function App() {
 
        
     })
+
+    
         //task
         const removeTask = (taskId: string, todolistId: string) => {
             setTask({...task, [todolistId]: task [todolistId].filter(t => t.id !== taskId)})
@@ -101,35 +105,7 @@ function App() {
 
 
         //GUI Layer
-        
-        
-
-        
-
-        //This is how you can do it without filter method
-        //But please don't
-        // const nextState: Array<TaskType> = [] 
-        // for(let i = 0; i < task.length; i++) {
-        //     if(task[i].id !== taskId) {
-        //         nextState.push(task[i])
-        //     }
-        // }
-        // setTask(nextState)
-
-
-    //     const copyCurrentState = [...task];
-    //     let taskIndex;
-
-    //     for( let i = 0; i < copyCurrentState.length; i++) {
-    //         if(task[i].id === taskId) {
-    //             taskIndex = i
-    //         }
-    //     }
-    //         if(taskIndex !== undefined) {
-    //     copyCurrentState.splice(taskIndex, 1);
-    //         }
-    //     setTask(copyCurrentState)
-    
+            
     const removeTodolist = (todolistId: string) => {
         setTodolist(todolist.filter(tl => tl.id !== todolistId))
         delete task[todolistId]
@@ -153,20 +129,40 @@ const changeTodolistTitle = (title: string, todolistId: string) => {
 
 
     //User Interface
+     const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#ef6c00'
+            }
+        }
+     })
+
+
     return (
+        <ThemeProvider theme={theme}>
         <div className="App">
 
     <AppBar position="static">
-         <Toolbar>
+         <Toolbar sx = {{display: "flex", justifyContent: "space-between"}}>
            <IconButton color="inherit">
              <MenuIcon />
            </IconButton>
-          <Button color="inherit">Login</Button>
+
+        <Box>
+          <MenuButton>Login</MenuButton>
+          <MenuButton>Logout</MenuButton>
+          <MenuButton background={theme.palette.secondary.light}>Faq</MenuButton>
+        </Box>
+
         </Toolbar>
       </AppBar>
-      <Container fixed> 
+      <Container fixed>
+
+        <Grid2 container sx = {{padding: "15px 0px"}}>
     <AddItemForum addItem={addTodolis}/>
-        
+    </Grid2> 
+
+    <Grid2 container spacing={4}>
 
         {todolist.map(tl => {
 
@@ -179,7 +175,17 @@ if(tl.filter === "Active") {
 if(tl.filter === "Complited") {
     filteredTask = filteredTask.filter(task => task.isDone === true)
 }
+
+
+
             return (
+                <Grid2 key = {tl.id}>
+                <Paper  
+                elevation={8} 
+                sx = {{padding: "15px", 
+                       backgroundColor: "rgb(235, 223, 233)",
+                       border: "2px solid darkgrey"}}
+                       > 
                 <Todolist
                 key={tl.id} 
                 todolistId = {tl.id}
@@ -193,13 +199,17 @@ if(tl.filter === "Complited") {
                 removeTodolist={removeTodolist}
                 changeTodolistTitle = {changeTodolistTitle}
                 changeTaskTitle={changeTaskTitle}  />
+                </Paper>
+                </Grid2>
             )
         })}
 
            
-            
+</Grid2>     
 </Container>  
+
         </div>
+        </ThemeProvider>
     );
 
     }
