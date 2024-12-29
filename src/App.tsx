@@ -8,9 +8,10 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Box, Container, Grid2, Paper } from '@mui/material';
+import { Box, Container, CssBaseline, Grid2, Paper, Switch } from '@mui/material';
 import { MenuButton } from './components/MenuButton';
 import { createTheme, ThemeProvider } from '@mui/material/styles'; 
+import { amber, green } from '@mui/material/colors';
  
 
 
@@ -54,7 +55,7 @@ function App() {
        
     })
 
-    
+    const [themeMode, setThemeMode] = useState<'dark' | 'light'>('light')
         //task
         const removeTask = (taskId: string, todolistId: string) => {
             setTask({...task, [todolistId]: task [todolistId].filter(t => t.id !== taskId)})
@@ -131,15 +132,16 @@ const changeTodolistTitle = (title: string, todolistId: string) => {
     //User Interface
      const theme = createTheme({
         palette: {
-            primary: {
-                main: '#ef6c00'
-            }
+            mode: themeMode,
+            primary: green,
+            secondary: amber,
         }
      })
 
 
     return (
         <ThemeProvider theme={theme}>
+        <CssBaseline />
         <div className="App">
 
     <AppBar position="static">
@@ -151,7 +153,10 @@ const changeTodolistTitle = (title: string, todolistId: string) => {
         <Box>
           <MenuButton>Login</MenuButton>
           <MenuButton>Logout</MenuButton>
-          <MenuButton background={theme.palette.secondary.light}>Faq</MenuButton>
+          <MenuButton background={theme.palette.secondary.dark}>Faq</MenuButton>
+          <Switch onChange={()=>{
+            setThemeMode(themeMode === "dark" ? "light" : "dark")
+          }} />
         </Box>
 
         </Toolbar>
@@ -183,7 +188,7 @@ if(tl.filter === "Complited") {
                 <Paper  
                 elevation={8} 
                 sx = {{padding: "15px", 
-                       backgroundColor: "rgb(235, 223, 233)",
+                       backgroundColor: "rgb(191, 27, 251)",
                        border: "2px solid darkgrey"}}
                        > 
                 <Todolist

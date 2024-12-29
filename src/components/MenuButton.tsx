@@ -3,8 +3,7 @@ import  Button from "@mui/material/Button";
 
 
 type MenuButtonPropsType = {
-    background?: string,
-    boxShadow?: string
+    background?: string
 }
 
 
