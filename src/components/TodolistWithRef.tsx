@@ -75,7 +75,7 @@ export function Todolist (props: TodolistPropsType) {
         <div>
             <Button title="All" onClickHandler = {()=> props.chandeFilter("All")}/>
             <Button title="Active" onClickHandler={()=> props.chandeFilter('Active')}/>
-            <Button title="Completed" onClickHandler={()=> props.chandeFilter('Complited')}/>
+            <Button title="Completed" onClickHandler={()=> props.chandeFilter('Completed')}/>
         </div>
     </div>
     )

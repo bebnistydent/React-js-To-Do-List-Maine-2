@@ -170,9 +170,9 @@ export function Todolist(props: TodolistPropsType) {
                 >Active</Button>
 
                 <Button variant="contained" size="small"
-                    color={props.filter === "Complited" ? "secondary" : "primary"}
+                    color={props.filter === "Completed" ? "secondary" : "primary"}
                     //classes={props.filter === "Complited" ? "btn-filter-active" : ""} 
-                    onClick={() => props.changeTodolistFilter("Complited", props.todolistId)}
+                    onClick={() => props.changeTodolistFilter("Completed", props.todolistId)}
                 >Completed</Button>
 
             </Stack>
